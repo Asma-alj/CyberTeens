@@ -88,9 +88,10 @@ function Profile() {
             toast.error(res?.error)
         } else {
             toast.success(res.data?.message)
-            let userData = res.data?.result;
-            Dispatch(userDataActions.setUserData(userData))
-            localStorage.setItem("CyberTeensUserData", JSON.stringify(userData))
+
+            setTimeout(() => {
+                window.location.reload()
+            }, 1000);
         }
         setLoading(false)
     }
