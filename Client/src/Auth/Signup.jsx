@@ -87,7 +87,7 @@ function Signup() {
             <Button
               loading={loading}
               onClick={onSubmit}>Sign up</Button>
-            <p>Alerady have a ?<span>Login in</span></p>
+            <p>Alerady have a ?<span onClick={()=> Navigate("/login")}>Login in</span></p>
 
           </div>
         </div>

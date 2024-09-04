@@ -1,4 +1,5 @@
 import { React, useState } from 'react'
+import { useNavigate } from "react-router-dom"
 
 // ANT-D :
 import { Button, Input } from 'antd'
@@ -17,13 +18,13 @@ import './style/auth.scss'
 
 
 function Login() {
-
-    const [isLoading, setIsLoading] = useState(false);
+    const Navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         email: "",
         password: ""
     })
+    const [isLoading, setIsLoading] = useState(false);
 
     const enteringFormData = (event) => {
         let { name, value } = event.target;
@@ -69,7 +70,7 @@ function Login() {
                             type="submit"
                             onClick={onSubmit}>Sign in</Button>
                         <p>Don't have a account yet?</p>
-                        <p>Click here to <span>Register </span></p>
+                        <p>Click here to <span style={{cursor:"pointer"}} onClick={() => Navigate("/signup")}>Register </span></p>
 
                     </div>
                 </div>

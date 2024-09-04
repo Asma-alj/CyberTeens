@@ -6,13 +6,25 @@
 
 
 
-*{
+* {
   padding: 0%;
   margin: 0%;
   box-sizing: border-box;
 }
 
-body{
+body {
   font-family: "DM Sans", sans-serif;
 
+}
+
+.ant-btn {
+  span {
+    color: black !important;
+  }
+
+  &:hover {
+    span {
+      color: white !important;
+    }
+  }
 }
