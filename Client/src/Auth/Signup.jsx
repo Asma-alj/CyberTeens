@@ -2,7 +2,7 @@ import { React, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 // Antd :
-import { Input } from 'antd'
+import { Button, Input } from 'antd'
 
 // Assets | ICONS :
 import zeropark from '../assets/zeropark-logo-color-cm.svg'
@@ -24,7 +24,8 @@ function Signup() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    displayName: "",
+    firstName: "",
+    lastName: "",
   })
   const [loading, setLoading] = useState(false)
 
@@ -41,9 +42,9 @@ function Signup() {
     event?.preventDefault();
     setLoading(true)
 
-    const { displayName, email, password } = formData;
+    const { firstName, lastName, email, password } = formData;
 
-    let res = await RegisterAPI({ email, password, displayName })
+    let res = await RegisterAPI({ email, password, firstName, lastName })
     if (res.error != null) {
       toast.error(res.error)
     } else {
@@ -65,7 +66,12 @@ function Signup() {
             <Input placeholder='First name*'
               id="username"
               type="text"
-              name="displayName"
+              name="firstName"
+              onChange={enteringFormData} />
+            <Input placeholder='Last name*'
+              id="username"
+              type="text"
+              name="lastName"
               onChange={enteringFormData} />
             <Input placeholder='Email'
               id="email"
@@ -78,9 +84,9 @@ function Signup() {
               type="password"
               name="password"
               onChange={enteringFormData} />
-            <button
+            <Button
               loading={loading}
-              onClick={onSubmit}>Sign up</button>
+              onClick={onSubmit}>Sign up</Button>
             <p>Alerady have a ?<span>Login in</span></p>
 
           </div>

@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 
 // ANT-D :
-import { Input } from 'antd'
+import { Button, Input } from 'antd'
 
 // Assets | ICONS :
 import zeropark from '../assets/zeropark-logo-color-cm.svg'
@@ -43,8 +43,8 @@ function Login() {
         } else {
             let Token = res.data?.data?.accessToken
             console.log(Token)
-            localStorage.setItem('token', Token)
-            localStorage.setItem("UserData", JSON.stringify(res.data?.data?.user))
+            localStorage.setItem('CyberTeensToken', Token)
+            localStorage.setItem("CyberTeensUserData", JSON.stringify(res.data?.data?.user))
             toast.success(res.data?.message)
             setTimeout(() => {
                 window.location.href = "/"
@@ -63,11 +63,11 @@ function Login() {
                         <h7>Please enter your detail to continue.</h7>
                         <Input placeholder='Enter email' name='email' onChange={enteringFormData} type='text' />
                         <Input placeholder='Password' name='password' onChange={enteringFormData} type='password' />
-                        <button
+                        <Button
                             disabled={isLoading}
                             loading={isLoading}
                             type="submit"
-                            onClick={onSubmit}>Sign in</button>
+                            onClick={onSubmit}>Sign in</Button>
                         <p>Don't have a account yet?</p>
                         <p>Click here to <span>Register </span></p>
 

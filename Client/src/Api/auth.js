@@ -1,7 +1,7 @@
 import Axios from '../AxiosInstance'
 import GetAuthToken from "../Utils/AuthToken"
 
-const RegisterAPI = async ({ email, password, displayName }) => {
+const RegisterAPI = async ({ email, password, firstName, lastName }) => {
     let resolve = {
         data: null,
         error: null
@@ -13,7 +13,8 @@ const RegisterAPI = async ({ email, password, displayName }) => {
             data: {
                 email: email,
                 password: password,
-                displayName: displayName
+                firstName: firstName,
+                lastName: lastName
             }
         })
         resolve.data = res.data

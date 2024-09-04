@@ -2,6 +2,11 @@ const express = require("express");
 const Users = require("../Models/users.model");
 const jwt = require("jsonwebtoken");
 const JWT = require("../../Utilities/generateToken");
+const { uploadFile } = require("../../Utilities/uploader");
+
+
+
+
 require("dotenv").config();
 
 // Login User
@@ -31,7 +36,7 @@ exports.Loginuser = async (req, res) => {
 // Register User
 exports.RegisterUser = async (req, res) => {
   try {
-    var { email, password, displayName } = req.body;
+    var { email, password, firstName, lastName } = req.body;
 
     const result = await Users.findOne({ email: email });
     if (result) return res.status(400).json({ status: "failed", message: "Email already Exists" })
@@ -39,7 +44,8 @@ exports.RegisterUser = async (req, res) => {
     let UserData = await Users.create({
       email,
       password,
-      displayName,
+      firstName,
+      lastName,
       password
     })
     res.status(200).json({
@@ -75,7 +81,7 @@ exports.updateUserProfile = async (req, res) => {
   try {
     let UserData = req.UserData;
     let Payload = req.body;
-
+    console.log("========" , Payload);
     console.log(req.file);
 
     if (req?.file) {

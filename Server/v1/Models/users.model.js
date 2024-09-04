@@ -32,7 +32,16 @@ const userSchema = mongoose.Schema(
         message: 'Password {VALUE} is not strong enough.',
       },
     },
-   
+
+    firstName: String,
+    lastName: String,
+
+    phone: String,
+    age: String,
+    city: String,
+    state: String,
+    zip: String,
+    country: String,
 
     displayName: {
       type: String,
@@ -40,8 +49,8 @@ const userSchema = mongoose.Schema(
       minLength: [3, 'Name must be at least 3 characters.'],
       maxLength: [100, 'Name is too large'],
     },
-   
-    
+
+
     imageURL: {
       type: String,
       validate: [validator.isURL, 'Please provide a valid url'],

@@ -12,6 +12,7 @@ import { IoIosMenu, IoIosClose } from "react-icons/io";
 
 // CSS :
 import "./style/Navbar.scss";
+import toast from "react-hot-toast";
 
 
 
@@ -27,22 +28,27 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const userData = localStorage.getItem("userData");
+  const userData = localStorage.getItem("CyberTeensUserData");
   const user = JSON.parse(userData);
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("CyberTeensToken");
 
   const handleGoToLogout = () => {
-    console.log("button is cliecked", localStorage.getItem("token"));
-    localStorage.removeItem("userData");
-    localStorage.removeItem("token");
-    navigate("/login");
+    console.log("button is cliecked", localStorage.getItem("CyberTeensToken"));
+    localStorage.clear();
+    localStorage.clear();
+
+    toast.error("Logout Successful")
+
+    setTimeout(() => {
+      window.location.href = "/"
+    }, 1000);
     return true;
   };
 
   const itemsProfile = [
     {
       key: "3",
-      label: <Link to={"/myaccount"}>My Account</Link>,
+      label: <Link to={"/dashboard"}>My Account</Link>,
     },
     {
       key: "4",

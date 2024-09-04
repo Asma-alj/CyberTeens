@@ -22,6 +22,9 @@ app.use(morgan("dev"));
 // import routes
 const usersRoute = require('./v1/Routes/users.route')
 
+app.use("/static", express.static(path.join(__dirname, '/public')));
+
+
 
 // declare routes
 app.use('/api/v1/users', usersRoute)
