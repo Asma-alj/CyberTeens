@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
-const { type } = require('os')
 
 const userSchema = mongoose.Schema(
   {
@@ -43,13 +42,29 @@ const userSchema = mongoose.Schema(
     zip: String,
     country: String,
 
+    quizAttempts: [
+      {
+        correct: Number,
+        wrong: Number,
+        quizId: String,
+        quizData: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "quiz"
+        },
+        attempts: [{
+          question: String,
+          options: Array,
+          correctAnswer: String,
+          attempt: String
+        }]
+      }
+    ],
     displayName: {
       type: String,
       trim: true,
       minLength: [3, 'Name must be at least 3 characters.'],
       maxLength: [100, 'Name is too large'],
     },
-
 
     imageURL: {
       type: String,
@@ -59,6 +74,12 @@ const userSchema = mongoose.Schema(
       type: String,
       default: 'active',
       enum: ['active', 'inactive', 'blocked'],
+    },
+
+    role: {
+      type: String,
+      default: 'Student',  // Default role if not provided
+      enum: ['Student', 'Teacher'],
     },
 
     confirmationToken: String,
@@ -73,13 +94,13 @@ const userSchema = mongoose.Schema(
   }
 )
 
+// Hash password before saving the user document
 userSchema.pre('save', function (next) {
   if (!this.isModified('password')) {
-    //  only run if password is modified, otherwise it will change every time we save the user!
     return next()
   }
-  const password = this.password
 
+  const password = this.password
   const hashedPassword = bcrypt.hashSync(password)
 
   this.password = hashedPassword
@@ -88,18 +109,18 @@ userSchema.pre('save', function (next) {
   next()
 })
 
+// Compare the provided password with the stored hash
 userSchema.methods.comparePassword = function (password, hash) {
-  const isPasswordValid = bcrypt.compareSync(password, hash)
-  return isPasswordValid
+  return bcrypt.compareSync(password, hash)
 }
 
+// Generate confirmation token
 userSchema.methods.generateConfirmationToken = function () {
   const token = crypto.randomBytes(32).toString('hex')
 
   this.confirmationToken = token
 
   const date = new Date()
-
   date.setDate(date.getDate() + 1)
   this.confirmationTokenExpires = date
 

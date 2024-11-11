@@ -6,15 +6,24 @@ import Login from '../src/Auth/Login'
 import Signup from '../src/Auth/Signup'
 import Home from "./components/pages/Home";
 import MyAccount from "./components/MyAccount";
+import FlipcardComponent from "./components/FlipCard/Index"
+import MCQQuestion from "./components/MCQs/MCQs";
+import IndexMcqs from "./components/MCQs";
+import CourseDetail from "./components/CourseReview/CourseDetail";
+import Course from "./components/Course/index";
+import Quiz from "./components/Quiz/index";
+import About from "./components/About";
 
 // APIs :
 import { GetProfileAPI } from "./Api/auth";
+
 // Redux :
 import { useDispatch, useSelector } from 'react-redux';
 import { userDataActions } from "./Redux/Slice/userData"
 
 // Helpers :
 import { Toaster } from 'react-hot-toast';
+
 
 
 
@@ -62,6 +71,11 @@ function App() {
         <Route path="login" element={<AuthRoute user={AuthToken}> <Login /> </AuthRoute>} />
         <Route path="signup" element={<AuthRoute user={AuthToken}> <Signup /> </AuthRoute>} />
         <Route path="dashboard/*" element={<ProtectedRoute user={AuthToken}>  <MyAccount />  </ProtectedRoute>} />
+        <Route path="card" element={<ProtectedRoute user={AuthToken}>  <FlipcardComponent />  </ProtectedRoute>} />
+        <Route path="mcqs" element={<IndexMcqs />} />
+        <Route path="course" element={<CourseDetail />} />
+        <Route path="courses" element={<Course />} />
+        <Route path="quizzes" element={<Quiz />} />
       </Routes>
 
     </>

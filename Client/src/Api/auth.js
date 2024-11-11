@@ -1,7 +1,7 @@
 import Axios from '../AxiosInstance'
 import GetAuthToken from "../Utils/AuthToken"
 
-const RegisterAPI = async ({ email, password, firstName, lastName }) => {
+const RegisterAPI = async ({ email, password, firstName, lastName, role }) => {
     let resolve = {
         data: null,
         error: null
@@ -14,7 +14,8 @@ const RegisterAPI = async ({ email, password, firstName, lastName }) => {
                 email: email,
                 password: password,
                 firstName: firstName,
-                lastName: lastName
+                lastName: lastName,
+                role: role
             }
         })
         resolve.data = res.data
@@ -98,5 +99,93 @@ const UpdateProfileAPI = async (data) => {
     return resolve
 }
 
+const GetAllStudentsAPI = async () => {
+    let resolve = {
+        data: null,
+        error: null
+    }
+    try {
+        let res = await Axios({
+            url: "/users/students",
+            method: "GET",
+            headers: GetAuthToken(),
+        })
+        resolve.data = res.data
+    } catch (err) {
+        if (err && err?.response) {
+            resolve.error = err?.response?.message || err?.response?.data?.message
+        } else {
+            resolve.error = "SomthingWent wrong"
+        }
+    }
+    return resolve
+}
 
-export { RegisterAPI, LoginAPI, GetProfileAPI, UpdateProfileAPI }
+const GetDashboardStatisticsAPI = async () => {
+    let resolve = {
+        data: null,
+        error: null
+    }
+    try {
+        let res = await Axios({
+            url: "/dashboard/",
+            method: "GET",
+            headers: GetAuthToken(),
+        })
+        resolve.data = res.data
+    } catch (err) {
+        if (err && err?.response) {
+            resolve.error = err?.response?.message || err?.response?.data?.message
+        } else {
+            resolve.error = "SomthingWent wrong"
+        }
+    }
+    return resolve
+}
+
+const DeleteStudentAPI = async (id) => {
+    let resolve = {
+        data: null,
+        error: null
+    }
+    try {
+        let res = await Axios({
+            url: `/users/students/${id}`,
+            method: "DELETE",
+            headers: GetAuthToken(),
+        })
+        resolve.data = res.data
+    } catch (err) {
+        if (err && err?.response) {
+            resolve.error = err?.response?.message || err?.response?.data?.message
+        } else {
+            resolve.error = "SomthingWent wrong"
+        }
+    }
+    return resolve
+}
+
+const CreateStudentAPI = async (data) => {
+    let resolve = {
+        data: null,
+        error: null
+    }
+    try {
+        let res = await Axios({
+            url: `/users/students`,
+            method: "POST",
+            data: data,
+            headers: GetAuthToken(),
+        })
+        resolve.data = res.data
+    } catch (err) {
+        if (err && err?.response) {
+            resolve.error = err?.response?.message || err?.response?.data?.message
+        } else {
+            resolve.error = "SomthingWent wrong"
+        }
+    }
+    return resolve
+}
+
+export { RegisterAPI, LoginAPI, GetProfileAPI, UpdateProfileAPI, GetDashboardStatisticsAPI, GetAllStudentsAPI, CreateStudentAPI, DeleteStudentAPI }
